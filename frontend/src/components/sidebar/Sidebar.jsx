@@ -51,7 +51,7 @@ export const Sidebar = ({ user, currentPage, onNavigate, isOpen, onToggle }) => 
 
   return (
     <div
-      className={`bg-orange-300 border-r border-gray-200 transition-all duration-300 flex flex-col ${
+      className={`bg-background border-r border-gray-200 transition-all duration-300 flex flex-col ${
         isOpen ? "w-64" : "w-16"
       }`}
     >
