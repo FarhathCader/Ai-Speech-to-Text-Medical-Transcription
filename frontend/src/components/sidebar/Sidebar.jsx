@@ -72,7 +72,11 @@ export const Sidebar = ({ user, currentPage, onNavigate, isOpen, onToggle }) => 
             onClick={onToggle}
             // className="p-1 h-8 w-8"
           >
-            <ChevronLeft className={`w-4 h-4 transition-transform`} />
+            <ChevronLeft
+              className={`w-4 h-4 transition-transform ${
+                !isOpen ? "rotate-180" : ""
+              }`}
+            />
           </Button>
         </div>
       </div>
