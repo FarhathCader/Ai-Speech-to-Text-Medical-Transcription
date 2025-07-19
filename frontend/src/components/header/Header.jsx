@@ -2,19 +2,19 @@ import { Button, Dropdown, Switch } from "antd";
 import { User, Settings, LogOut, Moon, Sun } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 
-export const Header = ({  onLogout,  }) => {
+export const Header = ({ onLogout, user }) => {
   const { theme, toggleTheme } = useTheme();
 
-   const handleLogout = () => {
-     localStorage.removeItem("user");
-     onLogout();
-   };
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    onLogout();
+  };
 
   const menuItems = [
     {
       key: "profile",
       label: (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ">
           <User className="w-4 h-4 mr-2" />
           Profile
         </div>
@@ -64,9 +64,8 @@ export const Header = ({  onLogout,  }) => {
     },
   ];
 
-
   return (
-    <header className="bg-white dark:bg-black border-b border-gray-200 px-6 py-4">
+    <header className="bg-background border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           {/* <Button
@@ -79,12 +78,11 @@ export const Header = ({  onLogout,  }) => {
           </Button> */}
 
           <div>
-            <h1 className="text-xl font-semibold text-gray-900">
+            <h1 className="text-xl font-semibold text-foreground">
               Welcome back,
-              {/* {user.name.split(" ")[0]} */}
-              rifab
+              {user.name.split(" ")[0]}
             </h1>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
               {new Date().toLocaleDateString("en-US", {
                 weekday: "long",
                 year: "numeric",
@@ -103,7 +101,9 @@ export const Header = ({  onLogout,  }) => {
             <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
               <User className="w-4 h-4 text-white" />
             </div>
-            <span className="hidden md:inline">{/* {user.name} */}rifab</span>
+            <span className="hidden md:inline text-foreground">
+              {user.name}
+            </span>
           </Button>
         </Dropdown>
       </div>

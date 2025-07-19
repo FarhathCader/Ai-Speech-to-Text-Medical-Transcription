@@ -7,10 +7,17 @@ import {
   Shield,
   Stethoscope,
   UserCheck,
+  History,
 } from "lucide-react";
 // import { useState } from "react";
 
-export const Sidebar = ({ user, currentPage, onNavigate, isOpen, onToggle }) => {
+export const Sidebar = ({
+  user,
+  currentPage,
+  onNavigate,
+  isOpen,
+  onToggle,
+}) => {
   const menuItems = [
     {
       id: "home",
@@ -34,7 +41,7 @@ export const Sidebar = ({ user, currentPage, onNavigate, isOpen, onToggle }) => 
       id: "review",
       label: "Review Queue",
       icon: UserCheck,
-      roles: ["transcriptionist"],
+      roles: ["transcriptionist", "doctor"],
     },
     { id: "admin", label: "Admin Panel", icon: Shield, roles: ["admin"] },
     {
@@ -52,7 +59,7 @@ export const Sidebar = ({ user, currentPage, onNavigate, isOpen, onToggle }) => 
   return (
     <div
       className={`bg-background border-r border-gray-200 transition-all duration-300 flex flex-col ${
-        isOpen ? "w-64" : "w-16"
+        isOpen ? "w-48" : "w-16"
       }`}
     >
       {/* Header */}
@@ -63,27 +70,31 @@ export const Sidebar = ({ user, currentPage, onNavigate, isOpen, onToggle }) => 
               <Stethoscope className="w-5 h-5 text-white" />
             </div>
             {isOpen && (
-              <span className="font-semibold text-gray-900">MedTranscribe</span>
+              <span className="font-semibold text-foreground">
+                MedTranscribe
+              </span>
             )}
           </div>
-          <Button
-            // variant="ghost"
-            size="sm"
-            onClick={onToggle}
-            // className="p-1 h-8 w-8"
-          >
-            <ChevronLeft
-              className={`w-4 h-4 transition-transform ${
-                !isOpen ? "rotate-180" : ""
-              }`}
-            />
-          </Button>
+          <div className=" w-full flex justify-end">
+            <div
+              // variant="ghost"
+              size="sm"
+              onClick={onToggle}
+              className="cursor-pointer p-2 rounded-full bg-accent hover:bg-gray-200 transition-colors"
+            >
+              <ChevronLeft
+                className={`text-foreground w-4 h-4 transition-transform ${
+                  !isOpen ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4">
-        <ul className="space-y-2">
+      <nav className="flex-1 p-4 flex flex-col items-center">
+        <ul className="space-y-2 flex flex-col items-start">
           {filteredMenuItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentPage === item.id;
@@ -91,10 +102,18 @@ export const Sidebar = ({ user, currentPage, onNavigate, isOpen, onToggle }) => 
             return (
               <li key={item.id}>
                 <Button
-                  variant={isActive ? "default" : "ghost"}
-                  className={`w-full justify-start gap-3 h-10"
-                    ${!isOpen && "justify-center px-2"}
-                    ${isActive && "bg-blue-600 text-white hover:bg-blue-700"}
+                  type="text"
+                  className={`
+                    ${
+                      isOpen
+                        ? "w-44 !justify-start gap-3 h-10 "
+                        : "justify-center px-2 w-full"
+                    }
+                    ${
+                      isActive
+                        ? "!bg-blue-600 text-foreground !hover:bg-blue-700"
+                        : "hover:bg-accent text-muted-foreground"
+                    }
                     
                   `}
                   onClick={() => onNavigate(item.id)}
@@ -112,19 +131,19 @@ export const Sidebar = ({ user, currentPage, onNavigate, isOpen, onToggle }) => 
       <div className="p-4 border-t border-gray-200">
         {isOpen ? (
           <div className="space-y-2">
-            <div className="text-sm font-medium text-gray-900 truncate">
+            <div className="text-sm font-medium text-foreground truncate">
               {user.name}
             </div>
-            <div className="text-xs text-gray-500 capitalize">
+            <div className="text-xs text-muted-foreground capitalize">
               {user.role}
               {user.specialty && ` • ${user.specialty}`}
             </div>
           </div>
         ) : (
           <div className="flex justify-center">
-            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-              <span className="text-xs font-medium text-gray-700">
-                {/* {user.name.charAt(0)} */}
+            <div className="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center">
+              <span className="text-xs font-medium text-foreground">
+                {user.name.charAt(0)}
                 Rifab
               </span>
             </div>

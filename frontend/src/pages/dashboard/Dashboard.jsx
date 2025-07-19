@@ -3,26 +3,36 @@ import Home from '../home/Home.jsx';
 import { useState } from 'react';
 import { Header } from '../../components/header/Header';
 import { Sidebar } from '../../components/sidebar/Sidebar';
+import { NewTranscription } from '../newtranscription/NewTranscription.jsx';
+import { History } from '../history/History.jsx';
+import { Review } from '../review/Review.jsx';
+import { Admin } from '../admin/Admin.jsx';
+import { Settings } from '../settings/Settings.jsx';
 
 export const Dashboard = ({ onLogout }) => {
   const [currentPage, setCurrentPage] = useState("home");
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const user = "Doctor";
+  const user = {
+    name: "Rifab Ahamed",
+    role: "doctor", // doctor | transcriptionist | admin
+    specialty: "Cardiology", // Optional, only for doctors
+  };
+
 
   const renderPage = () => {
     switch (currentPage) {
       case "home":
         return <Home user={user} onNavigate={setCurrentPage} />;
-      // case "new-transcription":
-      //   return <NewTranscriptionPage user={user} />;
-      // case "history":
-      //   return <HistoryPage user={user} />;
-      // case "review":
-      //   return <ReviewPage user={user} />;
-      // case "admin":
-      //   return <AdminPage user={user} />;
-      // case "settings":
-      //   return <SettingsPage user={user} />;
+      case "new-transcription":
+        return <NewTranscription user={user} />;
+      case "history":
+        return <History user={user} />;
+      case "review":
+        return <Review user={user} />;
+      case "admin":
+        return <Admin user={user} />;
+      case "settings":
+        return <Settings user={user} />;
       default:
         return <HomePage user={user} onNavigate={setCurrentPage} />;
     }
