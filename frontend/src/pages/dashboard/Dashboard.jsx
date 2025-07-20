@@ -1,5 +1,5 @@
 import React from 'react'
-import Home from '../home/Home.jsx';
+import {Home} from '../home/Home.jsx';
 import { useState } from 'react';
 import { Header } from '../../components/header/Header';
 import { Sidebar } from '../../components/sidebar/Sidebar';
