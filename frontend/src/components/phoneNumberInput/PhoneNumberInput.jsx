@@ -91,7 +91,6 @@ const PhoneNumberInput = ({
             token: {
               colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
               colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
-
               optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
               selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
               optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",

@@ -21,6 +21,7 @@ import React, { useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
 import PhoneInput from "react-phone-input-2";
 import PhoneNumberInput from "../../components/phoneNumberInput/PhoneNumberInput";
+import {  } from "../../context/ThemeContext";
 
 const { Option } = Select;
 
@@ -28,7 +29,7 @@ const { Option } = Select;
 
 export const Settings = ({ user }) => {
   // const [showPassword, setShowPassword] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const [notifications, setNotifications] = useState({
     email: true,
     push: false,
@@ -36,7 +37,6 @@ export const Settings = ({ user }) => {
     reviewRequired: true,
     systemUpdates: false,
   });
-  const { theme } = useTheme();
 
   const saveSettings = () => {
     alert("Settings saved successfully!");
@@ -47,7 +47,10 @@ export const Settings = ({ user }) => {
   };
 
   const ProfileCard = () => (
-    <Card title="Profile Information" extra={<User className="w-5 h-5" />}>
+    <Card
+      title="Profile Information"
+      extra={<User className="w-5 h-5" />}
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
         <Input
           placeholder="First Name"
@@ -68,17 +71,32 @@ export const Settings = ({ user }) => {
 
       <div className="mb-2">
         {user.role === "doctor" && (
-          <Select
-            defaultValue={user.specialty?.toLowerCase()}
-            className="mt-4 w-full"
+          <ConfigProvider
+            theme={{
+              token: {
+                colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+                colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+
+                optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+                selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+                optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+                optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+                colorBgElevated: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              },
+            }}
           >
-            <Option value="cardiology">Cardiology</Option>
-            <Option value="neurology">Neurology</Option>
-            <Option value="orthopedics">Orthopedics</Option>
-            <Option value="internal-medicine">Internal Medicine</Option>
-            <Option value="pediatrics">Pediatrics</Option>
-            <Option value="surgery">Surgery</Option>
-          </Select>
+            <Select
+              defaultValue={user.specialty?.toLowerCase()}
+              className="mt-4 w-full"
+            >
+              <Option value="cardiology">Cardiology</Option>
+              <Option value="neurology">Neurology</Option>
+              <Option value="orthopedics">Orthopedics</Option>
+              <Option value="internal-medicine">Internal Medicine</Option>
+              <Option value="pediatrics">Pediatrics</Option>
+              <Option value="surgery">Surgery</Option>
+            </Select>
+          </ConfigProvider>
         )}
       </div>
 
@@ -105,22 +123,66 @@ export const Settings = ({ user }) => {
 
   const AudioCard = () => (
     <Card title="Audio Configuration" extra={<Mic className="w-5 h-5" />}>
-      <Select defaultValue="default" className="w-full mt-2">
-        <Option value="default">Default System Microphone</Option>
-        <Option value="usb">USB Headset Microphone</Option>
-        <Option value="bluetooth">Bluetooth Headset</Option>
-      </Select>
-      <Select defaultValue="high" className="w-full mt-4">
-        <Option value="low">Low (16kHz)</Option>
-        <Option value="medium">Medium (22kHz)</Option>
-        <Option value="high">High (44kHz)</Option>
-      </Select>
-      <Select defaultValue="medium" className="w-full mt-4">
-        <Option value="off">Off</Option>
-        <Option value="low">Low</Option>
-        <Option value="medium">Medium</Option>
-        <Option value="high">High</Option>
-      </Select>
+      <div className="flex flex-col gap-2">
+        <ConfigProvider
+          theme={{
+            token: {
+              colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+              optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+              selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+              optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+              colorBgElevated: theme === "dark" ? "#757575" : "#ffffff",
+            },
+          }}
+        >
+          <Select defaultValue="default" className="w-full mt-2">
+            <Option value="default">Default System Microphone</Option>
+            <Option value="usb">USB Headset Microphone</Option>
+            <Option value="bluetooth">Bluetooth Headset</Option>
+          </Select>
+        </ConfigProvider>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+              optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+              selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+              optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+              colorBgElevated: theme === "dark" ? "#757575" : "#ffffff",
+            },
+          }}
+        >
+          <Select defaultValue="high" className="w-full mt-4">
+            <Option value="low">Low (16kHz)</Option>
+            <Option value="medium">Medium (22kHz)</Option>
+            <Option value="high">High (44kHz)</Option>
+          </Select>
+        </ConfigProvider>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+              optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+              selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+              optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+              colorBgElevated: theme === "dark" ? "#757575" : "#ffffff",
+            },
+          }}
+        >
+          <Select defaultValue="medium" className="w-full mt-4">
+            <Option value="off">Off</Option>
+            <Option value="low">Low</Option>
+            <Option value="medium">Medium</Option>
+            <Option value="high">High</Option>
+          </Select>
+        </ConfigProvider>
+      </div>
       <div className="flex justify-between items-center mt-4">
         <span>Auto-gain Control</span>
         <Switch defaultChecked />
@@ -137,26 +199,70 @@ export const Settings = ({ user }) => {
       title="Application Preferences"
       extra={<Palette className="w-5 h-5" />}
     >
-      <div className="flex justify-between items-center mt-2">
+      <div className="flex justify-between items-center my-2">
         <span>Dark Mode</span>
-        <Switch checked={darkMode} onChange={setDarkMode} />
+        <Switch checked={theme === "dark"} onChange={toggleTheme} />
       </div>
-      <Select defaultValue="pdf" className="w-full mt-4">
-        <Option value="pdf">PDF</Option>
-        <Option value="docx">Microsoft Word</Option>
-        <Option value="txt">Plain Text</Option>
-      </Select>
-      <Select defaultValue="en" className="w-full mt-4">
-        <Option value="en">English</Option>
-        <Option value="es">Spanish</Option>
-        <Option value="fr">French</Option>
-      </Select>
-      <Select defaultValue="est" className="w-full mt-4">
-        <Option value="est">Eastern Time (EST)</Option>
-        <Option value="cst">Central Time (CST)</Option>
-        <Option value="mst">Mountain Time (MST)</Option>
-        <Option value="pst">Pacific Time (PST)</Option>
-      </Select>
+      <div className="flex flex-col gap-2">
+        <ConfigProvider
+          theme={{
+            token: {
+              colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+              optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+              selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+              optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+              colorBgElevated: theme === "dark" ? "#757575" : "#ffffff",
+            },
+          }}
+        >
+          <Select defaultValue="pdf" className="w-full mt-4">
+            <Option value="pdf">PDF</Option>
+            <Option value="docx">Microsoft Word</Option>
+            <Option value="txt">Plain Text</Option>
+          </Select>
+        </ConfigProvider>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+              optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+              selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+              optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+              colorBgElevated: theme === "dark" ? "#757575" : "#ffffff",
+            },
+          }}
+        >
+          <Select defaultValue="en" className="w-full mt-4">
+            <Option value="en">English</Option>
+            <Option value="es">Spanish</Option>
+            <Option value="fr">French</Option>
+          </Select>
+        </ConfigProvider>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+              optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+              selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+              optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+              colorBgElevated: theme === "dark" ? "#757575" : "#ffffff",
+            },
+          }}
+        >
+          <Select defaultValue="est" className="w-full mt-4">
+            <Option value="est">Eastern Time (EST)</Option>
+            <Option value="cst">Central Time (CST)</Option>
+            <Option value="mst">Mountain Time (MST)</Option>
+            <Option value="pst">Pacific Time (PST)</Option>
+          </Select>
+        </ConfigProvider>
+      </div>
       <div className="flex justify-between items-center mt-4">
         <span>Auto-save Drafts</span>
         <Switch defaultChecked />
