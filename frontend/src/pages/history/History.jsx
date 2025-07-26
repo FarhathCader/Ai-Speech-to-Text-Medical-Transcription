@@ -1,4 +1,13 @@
-import { Badge, Button, Input, Select, Table, Dropdown, Menu } from "antd";
+import {
+  Badge,
+  Button,
+  Input,
+  Select,
+  Table,
+  Dropdown,
+  Menu,
+  ConfigProvider,
+} from "antd";
 import {
   Download,
   Edit,
@@ -9,6 +18,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import React, { useState } from "react";
+import { useTheme } from "../../context/ThemeContext";
 
 const { Option } = Select;
 
@@ -16,6 +26,7 @@ export const History = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [dateFilter, setDateFilter] = useState("all");
+  const { theme } = useTheme();
 
   const transcriptions = [
     {
@@ -78,7 +89,7 @@ export const History = () => {
   const getStatusBadge = (status) => {
     switch (status) {
       case "Completed":
-        return <Badge color="green" text="Completed"/>;
+        return <Badge color="green" text="Completed" />;
       case "In Review":
         return <Badge color="yellow" text="In Review" />;
       case "Draft":
@@ -142,7 +153,7 @@ export const History = () => {
       title: "Specialty",
       dataIndex: "specialty",
       key: "specialty",
-      render: (text) => <Badge count={text}/>,
+      render: (text) => <Badge count={text} />,
     },
     {
       title: "Duration",
@@ -228,51 +239,111 @@ export const History = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Transcription History</h1>
-          <p className="text-gray-600">View and manage your transcriptions</p>
+          <h1 className="text-2xl font-bold text-foreground">
+            Transcription History
+          </h1>
+          <p className="text-muted-foreground">
+            View and manage your transcriptions
+          </p>
         </div>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-          <Input
-            placeholder="Search by patient name, ID, or specialty..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ paddingLeft: 30 }}
-          />
+          <Search className="absolute left-3 top-3 h-4 w-4 text-foreground" />
+          <ConfigProvider
+            theme={{
+              token: {
+                colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+                colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+                colorBorder: theme === "dark" ? "#bfbfbf" : "#d9d9d9",
+                colorTextPlaceholder: theme === "dark" ? "#888888" : "#bfbfbf",
+                activeBorderColor: theme === "dark" ? "#bfbfbf" : "#d9d9d9",
+                hoverBorderColor: theme === "dark" ? "#bfbfbf" : "#d9d9d9",
+              },
+            }}
+          >
+            <Input
+              placeholder="Search by patient name, ID, or specialty..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ paddingLeft: 30 }}
+            />
+          </ConfigProvider>
         </div>
+        <ConfigProvider
+          theme={{
+            token: {
+              colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
 
-        <Select
-          value={statusFilter}
-          onChange={setStatusFilter}
-          style={{ width: 160 }}
+              optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+              selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+              optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+              colorBgElevated: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            },
+          }}
         >
-          <Option value="all">All Status</Option>
-          <Option value="Completed">Completed</Option>
-          <Option value="In Review">In Review</Option>
-          <Option value="Draft">Draft</Option>
-        </Select>
+          <Select
+            value={statusFilter}
+            onChange={setStatusFilter}
+            style={{ width: 160 }}
+          >
+            <Option value="all">All Status</Option>
+            <Option value="Completed">Completed</Option>
+            <Option value="In Review">In Review</Option>
+            <Option value="Draft">Draft</Option>
+          </Select>
+        </ConfigProvider>
 
-        <Select
-          value={dateFilter}
-          onChange={setDateFilter}
-          style={{ width: 160 }}
+        <ConfigProvider
+          theme={{
+            token: {
+              colorBgContainer: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+
+              optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+              selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+              optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+              optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+              colorBgElevated: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            },
+          }}
         >
-          <Option value="all">All Time</Option>
-          <Option value="today">Today</Option>
-          <Option value="week">This Week</Option>
-          <Option value="month">This Month</Option>
-        </Select>
+          <Select
+            value={dateFilter}
+            onChange={setDateFilter}
+            style={{ width: 160 }}
+          >
+            <Option value="all">All Time</Option>
+            <Option value="today">Today</Option>
+            <Option value="week">This Week</Option>
+            <Option value="month">This Month</Option>
+          </Select>
+        </ConfigProvider>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={filteredTranscriptions}
-        rowKey="id"
-        pagination={{ pageSize: 5 }}
-      />
+      <ConfigProvider
+        theme={{
+          token: {
+            colorBgContainer: theme === "dark" ? "#212121" : "#ffffff",
+            colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+            optionSelectedBg: theme === "dark" ? "#bfbfbf" : "#000000",
+            selectorBg: theme === "dark" ? "#1f1f1f" : "#ffffff",
+            optionSelectedColor: theme === "dark" ? "#0a0a0a" : "#ffffff",
+            optionActiveBg: theme === "dark" ? "#bfbfbf" : "#bfbfbf",
+            colorBgElevated: theme === "dark" ? "#1f1f1f" : "#ffffff",
+          },
+        }}
+      >
+        <Table
+          columns={columns}
+          dataSource={filteredTranscriptions}
+          rowKey="id"
+          pagination={{ pageSize: 5 }}
+        />
+      </ConfigProvider>
     </div>
   );
 };
