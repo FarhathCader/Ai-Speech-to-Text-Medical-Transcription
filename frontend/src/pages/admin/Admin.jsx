@@ -31,7 +31,7 @@ import { useTheme } from "../../context/ThemeContext";
 const { Option } = Select;
 
 export const Admin = () => {
-  const [showAddUser, setShowAddUser] = useState(false);
+  // const [showAddUser, setShowAddUser] = useState(false);
   
 const { theme } = useTheme();
   const users = [
@@ -107,9 +107,7 @@ const { theme } = useTheme();
     );
   };
 
-  const menu = (
-    <Menu
-      items={[
+  const menu = [
         {
           key: "1",
           icon: <Edit className="w-4 h-4" />,
@@ -126,9 +124,8 @@ const { theme } = useTheme();
           icon: <Trash2 className="w-4 h-4" />,
           label: "Delete User",
         },
-      ]}
-    />
-  );
+      ]
+
 
   const columns = [
     {
@@ -168,8 +165,8 @@ const { theme } = useTheme();
       key: "action",
       align: "right",
       render: () => (
-        <Dropdown menu={menu}>
-          <Button icon={<MoreHorizontal />} />
+        <Dropdown menu={{ items: menu }} trigger={["click"]}>
+          <Button icon={<MoreHorizontal size={16} />} />
         </Dropdown>
       ),
     },
@@ -180,17 +177,21 @@ const { theme } = useTheme();
       key: "1",
       label: "User Management",
       children: (
-        <Card
-          title="User Management"
-          extra={
-            <Button onClick={() => setShowAddUser(true)}>
-              <Plus className="w-4 h-4 mr-2" />
-              Add User
-            </Button>
-          }
-        >
-          <Table dataSource={users} columns={columns} rowKey="id" />
-        </Card>
+        <div className="overflow-x-auto ">
+          <div className="min-w-[1000px]">
+            <Card
+              title="User Management"
+              // extra={
+              //   <Button onClick={() => setShowAddUser(true)}>
+              //     <Plus className="w-4 h-4 mr-2" />
+              //     Add User
+              //   </Button>
+              // }
+            >
+              <Table dataSource={users} columns={columns} rowKey="id" />
+            </Card>
+          </div>
+        </div>
       ),
     },
     {
@@ -365,7 +366,7 @@ const { theme } = useTheme();
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
             Admin Dashboard
           </h1>
           <p className="text-muted-foreground">
@@ -374,7 +375,7 @@ const { theme } = useTheme();
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card
           className="bg-card border-border"
           title={
@@ -403,7 +404,7 @@ const { theme } = useTheme();
           </div>
           <p className="text-xs text-muted-foreground">This month</p>
         </Card>
-        <Card
+        {/* <Card
           className="bg-card border-border"
           title={
             <div className="flex items-center justify-between">
@@ -416,7 +417,7 @@ const { theme } = useTheme();
             +{analytics.monthlyGrowth}%
           </div>
           <p className="text-xs text-muted-foreground">vs last month</p>
-        </Card>
+        </Card> */}
         <Card
           className="bg-card border-border"
           title={
@@ -431,7 +432,7 @@ const { theme } = useTheme();
           </div>
           <p className="text-xs text-muted-foreground">Average accuracy</p>
         </Card>
-        <Card
+        {/* <Card
           className="bg-card border-border"
           title={
             <div className="flex items-center justify-between">
@@ -444,8 +445,8 @@ const { theme } = useTheme();
             {analytics.systemUptime}%
           </div>
           <p className="text-xs text-muted-foreground">System uptime</p>
-        </Card>
-        <Card
+        </Card> */}
+        {/* <Card
           className="bg-card border-border"
           title={
             <div className="flex items-center justify-between">
@@ -458,7 +459,7 @@ const { theme } = useTheme();
             {analytics.storageUsed}%
           </div>
           <p className="text-xs text-muted-foreground">Storage used</p>
-        </Card>
+        </Card> */}
       </div>
       <ConfigProvider
         theme={{
