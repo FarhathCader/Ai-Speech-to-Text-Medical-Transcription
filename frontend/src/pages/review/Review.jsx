@@ -124,14 +124,16 @@ export const Review = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Review Queue</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
+            Review Queue
+          </h1>
           <p className="text-muted-foreground">
             Review and approve pending transcriptions
           </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card
           className="bg-card border-border"
           title={
@@ -175,7 +177,7 @@ export const Review = () => {
           <p className="text-xs text-muted-foreground">Reviews completed</p>
         </Card>
 
-        <Card
+        {/* <Card
           className="bg-card border-border"
           title={
             <div className="flex items-center justify-between bg-card border-border">
@@ -186,14 +188,14 @@ export const Review = () => {
         >
           <div className="text-2xl font-bold text-foreground">12m</div>
           <p className="text-xs text-muted-foreground">Per review</p>
-        </Card>
+        </Card> */}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card
-          className="bg-card border-border"
+          className="bg-card border-border overflow-x-auto md:min-w-[410px]"
           title={
-            <div className="flex items-center justify-between bg-card border-border">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between bg-card border-border">
               <h3 className=" text-foreground">Pending Reviews</h3>
               <p className="text-muted-foreground text-sm">{`${pendingReviews.length} transcriptions awaiting review`}</p>
             </div>
@@ -217,155 +219,169 @@ export const Review = () => {
               dataSource={pendingReviews}
               rowKey="id"
               pagination={false}
+              className="w-[700px] sm:w-full"
             />
           </ConfigProvider>
         </Card>
 
-        <Card
-          className="bg-card border-border"
-          title={
-            <div className="flex items-center justify-between bg-card border-border">
-              <h3 className=" text-foreground">Review Editor</h3>
-              <p className="text-muted-foreground text-sm">
-                {selectedTranscription
-                  ? `Reviewing: ${selectedTranscription.patientName}`
-                  : "Select a transcription to review"}
-              </p>
-            </div>
-          }
+        <ConfigProvider
+          theme={{
+            token: {
+              bodyPadding: "12px",
+              headerPadding: "12px",
+            },
+          }}
         >
-          {selectedTranscription ? (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4 p-4 bg-background rounded-lg">
-                <div>
-                  <div className="text-sm font-medium text-foreground">
-                    Patient
-                  </div>
-                  <div className="text-muted-foreground">
-                    {selectedTranscription.patientName}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {selectedTranscription.patientId}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm font-medium text-foreground">
-                    Doctor
-                  </div>
-                  <div className="text-muted-foreground">
-                    {selectedTranscription.doctor}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {selectedTranscription.specialty}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm font-medium text-foreground">
-                    Date
-                  </div>
-                  <div className="text-muted-foreground">
-                    {new Date(selectedTranscription.date).toLocaleDateString()}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm font-medium text-foreground">
-                    Duration
-                  </div>
-                  <div className="text-muted-foreground">
-                    {selectedTranscription.duration}
-                  </div>
-                </div>
+          <Card
+            className="bg-card border-border"
+            title={
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between bg-card border-border">
+                <h3 className=" text-foreground">Review Editor</h3>
+                <p className="text-muted-foreground text-sm">
+                  {selectedTranscription
+                    ? `Reviewing: ${selectedTranscription.patientName}`
+                    : "Select a transcription to review"}
+                </p>
               </div>
+            }
+          >
+            {selectedTranscription ? (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4 sm:p-4 bg-background rounded-lg">
+                  <div>
+                    <div className="text-sm font-medium text-foreground">
+                      Patient
+                    </div>
+                    <div className="text-muted-foreground">
+                      {selectedTranscription.patientName}
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {selectedTranscription.patientId}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-foreground">
+                      Doctor
+                    </div>
+                    <div className="text-muted-foreground">
+                      {selectedTranscription.doctor}
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {selectedTranscription.specialty}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-foreground">
+                      Date
+                    </div>
+                    <div className="text-muted-foreground">
+                      {new Date(
+                        selectedTranscription.date
+                      ).toLocaleDateString()}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-medium text-foreground">
+                      Duration
+                    </div>
+                    <div className="text-muted-foreground">
+                      {selectedTranscription.duration}
+                    </div>
+                  </div>
+                </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">
-                  Transcript
-                </label>
-                <ConfigProvider
-                  theme={{
-                    token: {
-                      colorBgContainer:
-                        theme === "dark" ? "#1f1f1f" : "#ffffff",
-                      colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
-                      colorBorder: theme === "dark" ? "#bfbfbf" : "#d9d9d9",
-                      colorTextPlaceholder:
-                        theme === "dark" ? "#888888" : "#bfbfbf",
-                      activeBorderColor:
-                        theme === "dark" ? "#bfbfbf" : "#d9d9d9",
-                      hoverBorderColor:
-                        theme === "dark" ? "#bfbfbf" : "#d9d9d9",
-                    },
-                  }}
-                >
-                  <TextArea
-                    rows={8}
-                    value={selectedTranscription.transcript}
-                    onChange={(e) =>
-                      setSelectedTranscription({
-                        ...selectedTranscription,
-                        transcript: e.target.value,
-                      })
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">
+                    Transcript
+                  </label>
+                  <ConfigProvider
+                    theme={{
+                      token: {
+                        colorBgContainer:
+                          theme === "dark" ? "#1f1f1f" : "#ffffff",
+                        colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+                        colorBorder: theme === "dark" ? "#bfbfbf" : "#d9d9d9",
+                        colorTextPlaceholder:
+                          theme === "dark" ? "#888888" : "#bfbfbf",
+                        activeBorderColor:
+                          theme === "dark" ? "#bfbfbf" : "#d9d9d9",
+                        hoverBorderColor:
+                          theme === "dark" ? "#bfbfbf" : "#d9d9d9",
+                      },
+                    }}
+                  >
+                    <TextArea
+                      rows={8}
+                      value={selectedTranscription.transcript}
+                      onChange={(e) =>
+                        setSelectedTranscription({
+                          ...selectedTranscription,
+                          transcript: e.target.value,
+                        })
+                      }
+                    />
+                  </ConfigProvider>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground">
+                    Review Comments
+                  </label>
+                  <ConfigProvider
+                    theme={{
+                      token: {
+                        colorBgContainer:
+                          theme === "dark" ? "#1f1f1f" : "#ffffff",
+                        colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
+                        colorBorder: theme === "dark" ? "#bfbfbf" : "#d9d9d9",
+                        colorTextPlaceholder:
+                          theme === "dark" ? "#888888" : "#bfbfbf",
+                        activeBorderColor:
+                          theme === "dark" ? "#bfbfbf" : "#d9d9d9",
+                        hoverBorderColor:
+                          theme === "dark" ? "#bfbfbf" : "#d9d9d9",
+                      },
+                    }}
+                  >
+                    <TextArea
+                      rows={4}
+                      placeholder="Add comments or notes for the doctor..."
+                      value={reviewComment}
+                      onChange={(e) => setReviewComment(e.target.value)}
+                    />
+                  </ConfigProvider>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      approveTranscription(selectedTranscription.id)
                     }
-                  />
-                </ConfigProvider>
+                    className="flex-1"
+                    icon={<CheckCircle className="w-4 h-4 mr-2" />}
+                  >
+                    Approve & Finalize
+                  </Button>
+                  <Button
+                    onClick={() => requestChanges(selectedTranscription.id)}
+                    className="flex-1"
+                    icon={<MessageSquare className="w-4 h-4 mr-2" />}
+                  >
+                    Request Changes
+                  </Button>
+                </div>
               </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-foreground">
-                  Review Comments
-                </label>
-                <ConfigProvider
-                  theme={{
-                    token: {
-                      colorBgContainer:
-                        theme === "dark" ? "#1f1f1f" : "#ffffff",
-                      colorText: theme === "dark" ? "#ffffff" : "#0a0a0a",
-                      colorBorder: theme === "dark" ? "#bfbfbf" : "#d9d9d9",
-                      colorTextPlaceholder:
-                        theme === "dark" ? "#888888" : "#bfbfbf",
-                      activeBorderColor:
-                        theme === "dark" ? "#bfbfbf" : "#d9d9d9",
-                      hoverBorderColor:
-                        theme === "dark" ? "#bfbfbf" : "#d9d9d9",
-                    },
-                  }}
-                >
-                  <TextArea
-                    rows={4}
-                    placeholder="Add comments or notes for the doctor..."
-                    value={reviewComment}
-                    onChange={(e) => setReviewComment(e.target.value)}
-                  />
-                </ConfigProvider>
+            ) : (
+              <div className="text-center py-12 text-gray-500">
+                <FileText className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground">
+                  Select a transcription from the queue to begin reviewing
+                </p>
               </div>
-
-              <div className="flex gap-2">
-                <Button
-                  type="primary"
-                  onClick={() => approveTranscription(selectedTranscription.id)}
-                  className="flex-1"
-                  icon={<CheckCircle className="w-4 h-4 mr-2" />}
-                >
-                  Approve & Finalize
-                </Button>
-                <Button
-                  onClick={() => requestChanges(selectedTranscription.id)}
-                  className="flex-1"
-                  icon={<MessageSquare className="w-4 h-4 mr-2" />}
-                >
-                  Request Changes
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-12 text-gray-500">
-              <FileText className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-              <p className="text-muted-foreground">
-                Select a transcription from the queue to begin reviewing
-              </p>
-            </div>
-          )}
-        </Card>
+            )}
+          </Card>
+        </ConfigProvider>
       </div>
     </div>
   );

@@ -22,6 +22,8 @@ import {
 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../context/ThemeContext";
+import exportToPdf from "../../utils/exportToPdf.jsx";
+import exportToWord from "../../utils/exportToWord.jsx";
 
 const { Option } = Select;
 
@@ -139,26 +141,18 @@ export const NewTranscription = () => {
     }
   };
 
-  const exportToPDF = () => {
-    alert("Exporting to PDF...");
-  };
-
-  const exportToWord = () => {
-    alert("Exporting to Word...");
-  };
-
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+        <div className="pb-4 sm:pb-0">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
             New Transcription
           </h1>
           <p className="text-muted-foreground">
             Create a new medical transcription
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-row sm:flex-col md:flex-row ">
           <Button
             onClick={saveDraft}
             icon={<Save />}
@@ -434,21 +428,35 @@ export const NewTranscription = () => {
           <Card
             className="bg-card border-border"
             title={
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-2 sm:p-0">
                 <div className="flex items-center gap-2">
                   <FileText className="w-5 h-5 text-foreground" />{" "}
                   <h3 className="text-foreground">Live Transcript</h3>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2 pt-2">
                   <Button
-                    onClick={exportToPDF}
+                    onClick={() =>
+                      exportToPdf({
+                        patientName,
+                        patientId,
+                        dateOfBirth,
+                        specialty,
+                        transcript,
+                      })
+                    }
                     icon={<Download />}
                     className="text-xs"
                   >
                     PDF
                   </Button>
                   <Button
-                    onClick={exportToWord}
+                    onClick={()=>exportToWord({
+                      patientName,
+                      patientId,
+                      dateOfBirth,
+                      specialty,
+                      transcript,
+                    })}
                     icon={<Download />}
                     className="text-xs"
                   >
@@ -459,7 +467,7 @@ export const NewTranscription = () => {
             }
           >
             <div className="space-y-4">
-              <div className="flex gap-4 text-sm">
+              <div className="flex flex-col sm:flex-row sm:gap-4 text-sm">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-2 bg-blue-500 rounded"></div>
                   <span className="text-foreground">Medical Terms</span>
