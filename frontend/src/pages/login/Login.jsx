@@ -127,13 +127,16 @@ const LoginForm = ({ onLogin }) => {
           >
             Sign In
           </Button>
-          <div className="flex flex-col items-center gap-2 text-sm text-gray-600">
-            <Link
-              to="/forgot-password"
-              className="font-medium text-blue-600 hover:text-blue-500"
-            >
-              Forgot my password? Reset password
-            </Link>
+         <div className="flex flex-col items-center gap-2 text-sm text-gray-600">
+            <p>
+              Forgot my password?{" "}
+              <Link
+                to="/forgot-password"
+                className="font-medium text-blue-600 hover:text-blue-500"
+              >
+                Reset password
+              </Link>
+            </p>
             <p>
               Don&apos;t have an account?{" "}
               <Link
@@ -144,6 +147,7 @@ const LoginForm = ({ onLogin }) => {
               </Link>
             </p>
           </div>
+
         </form>
 
         {/* <div className="mt-4 text-center text-sm text-gray-600">
